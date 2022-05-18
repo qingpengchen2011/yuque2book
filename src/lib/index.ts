@@ -34,8 +34,8 @@ const yuque2book = async (token: string, url: string, local: boolean = false) =>
     await localize(dataDir, dataDir, token);
     // TODO: 需要重构一下代码
     try {
-      await fs.move(path.join(dataDir, "img"), path.join(dir, "img"));
-      await fs.move(path.join(dataDir, "attach"), path.join(dir, "attach"));
+      await fs.move(path.join(dataDir, "img"), path.join(dir, "img"), { overwrite: true });
+      await fs.move(path.join(dataDir, "attach"), path.join(dir, "attach"), { overwrite: true });
     } catch (e) {
       // tslint:disable-next-line
       console.log("移动文件失败", e);
@@ -169,7 +169,7 @@ const moveFrontEnd = async (dir: string) => {
   await fs.ensureDir(path.join(dir, 'data'));
   for(let md of toMoveDir){
     if(fs.existsSync(path.join(dir, md))){
-      await fs.move(path.join(dir, md), path.join(dir, 'data', md))
+      await fs.move(path.join(dir, md), path.join(dir, 'data', md), { overwrite: true });
     }
   }
 };
